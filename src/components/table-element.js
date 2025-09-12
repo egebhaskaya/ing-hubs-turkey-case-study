@@ -1,9 +1,44 @@
 import { LitElement, html, css } from "lit";
+import { store, deleteEmployee } from "../store/employee-store.js";
 
 import "./checkbox-element.js";
 import "./button-element.js";
+import "./pagination-element.js";
+import "./popup-element.js";
 
 export class TableElement extends LitElement {
+  static properties = {
+    list: { type: Array },
+    showPopup: { type: Boolean },
+    employeeId: { type: String },
+  };
+
+  constructor() {
+    super();
+    this.list = [];
+    this.showPopup = false;
+    this.employeeId = null;
+  }
+
+  handleEdit(id) {
+    window.location.href = `/dev/employee.html?id=${id}`;
+  }
+
+  handleShowPopup(id) {
+    this.employeeId = id;
+    this.showPopup = true;
+  }
+
+  handleClosePopup() {
+    this.showPopup = false;
+  }
+
+  handleDelete() {
+    console.log("test", this.employeeId);
+    this.showPopup = false;
+    store.dispatch(deleteEmployee(this.employeeId));
+  }
+
   render() {
     return html` <div>
       <table>
@@ -24,34 +59,44 @@ export class TableElement extends LitElement {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>
-              <checkbox-element></checkbox-element>
-            </td>
-            <td>John Doe</td>
-            <td>John Doe</td>
-            <td>john.doe@example.com</td>
-            <td>1234567890</td>
-            <td>1234567890</td>
-            <td>1234567890</td>
-            <td>1234567890</td>
-            <td>1234567890</td>
-            <td>
-              <div class="edit-delete-row">
-                <button-element icon="edit"></button-element>
-                <button-element icon="delete"></button-element>
-              </div>
-            </td>
-          </tr>
+          ${this.list?.map(
+            (employee) => html`
+              <tr>
+                <td>
+                  <checkbox-element></checkbox-element>
+                </td>
+                <td>${employee.firstName}</td>
+                <td>${employee.lastName}</td>
+                <td>${employee.email}</td>
+                <td>${employee.dateOfEmployment}</td>
+                <td>${employee.dateOfBirth}</td>
+                <td>${employee.phone}</td>
+                <td>${employee.department}</td>
+                <td>${employee.position}</td>
+                <td>
+                  <div class="edit-delete-row">
+                    <button-element
+                      icon="edit"
+                      @click=${() => this.handleEdit(employee.id)}
+                    ></button-element>
+                    <button-element
+                      icon="delete"
+                      @click=${() => this.handleShowPopup(employee.id)}
+                    ></button-element>
+                  </div>
+                </td>
+              </tr>
+            `
+          )}
         </tbody>
       </table>
-
-      <div class="pagination-container">
-        <button-element icon="leftArrow" bgColor="#f7f7f7"></button-element>
-        <div class="pagination-buttons pagination-buttons-active">1</div>
-        <div class="pagination-buttons">2</div>
-        <button-element icon="rightArrow" bgColor="#f7f7f7"></button-element>
-      </div>
+      <pagination-element></pagination-element>
+      <popup-element
+        .show=${this.showPopup}
+        @close=${this.handleClosePopup}
+        @confirm=${this.handleDelete}
+        @cancel=${this.handleClosePopup}
+      ></popup-element>
     </div>`;
   }
 
@@ -82,40 +127,6 @@ export class TableElement extends LitElement {
       height: 80px;
       border-bottom: 1px solid #f7f7f7;
       font-weight: 200;
-    }
-
-    .pagination-container {
-      display: flex;
-      flex-direction: row;
-      justify-content: center;
-      align-items: center;
-      gap: 10px;
-      padding-top: 40px;
-    }
-
-    .pagination-buttons {
-      display: flex;
-      flex-direction: row;
-      justify-content: center;
-      align-items: center;
-      cursor: pointer;
-      width: 12px;
-      height: 12px;
-      border-radius: 20px;
-      padding: 10px;
-      background-color: #f7f7f7;
-      font-size: 18px;
-      font-weight: 200;
-    }
-
-    .pagination-buttons:hover {
-      background-color: #ff630238;
-      font-weight: 400;
-    }
-
-    .pagination-buttons-active {
-      background-color: #ff6202;
-      color: white;
     }
 
     .edit-delete-row {

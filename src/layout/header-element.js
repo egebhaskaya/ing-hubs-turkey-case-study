@@ -3,6 +3,14 @@ import { LitElement, html, css } from "lit";
 import "../components/button-element.js";
 
 export class HeaderElement extends LitElement {
+  handleAddNewRoute() {
+    window.location.href = "/dev/employee.html";
+  }
+
+  handleEmployeesRoute() {
+    window.location.href = "/dev/index.html";
+  }
+
   render() {
     return html` <header>
       <div>
@@ -12,14 +20,33 @@ export class HeaderElement extends LitElement {
 
       <div>
         <button-element
+          class="header-button-mobile"
+          fontWeight="400"
+          icon="person"
+          @click="${this.handleEmployeesRoute}"
+        ></button-element>
+
+        <button-element
+          class="header-button-mobile"
+          fontWeight="400"
+          icon="plus"
+          @click="${this.handleAddNewRoute}"
+        ></button-element>
+
+        <button-element
+          class="header-button-desktop"
           fontWeight="400"
           label="Employees"
           icon="person"
+          @click="${this.handleEmployeesRoute}"
         ></button-element>
+
         <button-element
+          class="header-button-desktop"
           fontWeight="400"
           label="Add New"
           icon="plus"
+          @click="${this.handleAddNewRoute}"
         ></button-element>
 
         <span>TR</span>
@@ -56,6 +83,23 @@ export class HeaderElement extends LitElement {
       align-items: center;
       justify-content: space-between;
       gap: 10px;
+    }
+
+    .header-button-mobile {
+      display: none;
+    }
+
+    .header-button-desktop {
+      display: block;
+    }
+
+    @media (max-width: 768px) {
+      .header-button-mobile {
+        display: block;
+      }
+      .header-button-desktop {
+        display: none;
+      }
     }
   `;
 }

@@ -1,9 +1,58 @@
 import { LitElement, html, css } from "lit";
+import { store, addEmployee, setViewMode } from "../store/employee-store.js";
 import "../layout/header-element.js";
 import "../components/table-element.js";
 import "../components/button-element.js";
+import "../components/grid-element.js";
+
+/* store.dispatch(
+  addEmployee({
+    firstName: "Store Test",
+    lastName: "Working",
+    email: "test@working.com",
+    dateOfEmployment: "2024-01-01",
+    dateOfBirth: "1990-01-01",
+    phone: "+1111111111",
+    department: "Test",
+    position: "Test",
+  })
+); */
 
 export class EmployeeList extends LitElement {
+  static properties = {
+    employees: { type: Array },
+    viewMode: { type: String },
+  };
+
+  constructor() {
+    super();
+    this.employees = [];
+    this.viewMode = "table";
+
+    // Subscribe to store changes
+    this.unsubscribe = store.subscribe(() => {
+      const state = store.getState();
+      this.employees = state.employees.list;
+      this.viewMode = state.employees.viewMode;
+    });
+
+    // Initialize with current state
+    const state = store.getState();
+    this.employees = state.employees.list;
+    this.viewMode = state.employees.viewMode;
+  }
+
+  disconnectedCallback() {
+    super.disconnectedCallback();
+    if (this.unsubscribe) {
+      this.unsubscribe();
+    }
+  }
+
+  handleViewModeChange(viewMode) {
+    store.dispatch(setViewMode(viewMode));
+  }
+
   render() {
     return html` <header-element></header-element>
       <div class="container">
@@ -14,15 +63,27 @@ export class EmployeeList extends LitElement {
               icon="list"
               bgColor="#f7f7f7"
               iconSize="30px"
+              @click=${() => this.handleViewModeChange("table")}
             ></button-element>
             <button-element
               icon="grid"
               bgColor="#f7f7f7"
               iconSize="30px"
+              @click=${() => this.handleViewModeChange("grid")}
             ></button-element>
           </div>
         </div>
-        <table-element></table-element>
+
+        ${this.viewMode === "table" && this.employees?.length > 0
+          ? html` <table-element .list=${this.employees}></table-element> `
+          : html` <grid-element .list=${this.employees}></grid-element> `}
+        ${!this.employees || this.employees?.length === 0
+          ? html`
+              <div class="no-employees">
+                No employees found please add a new employee
+              </div>
+            `
+          : ""}
       </div>`;
   }
 
