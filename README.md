@@ -32,7 +32,7 @@ Thats it. Should work out of the box.
 
 ## Project Structure
 
-Well at the half point i just asked myself was this really necessary? But whatever here is a unnecessary root map...
+Here's the project structure to give you an overview of how everything is organized:
 
 ```
 ├── index.html                  # Main HTML entry point (SPA root)
