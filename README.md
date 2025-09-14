@@ -8,12 +8,13 @@ Basically, it's a CRUD app for managing employees. You can add, edit, delete emp
 
 ## Tech Stack
 
-- **LitElement** for web components: First time using it seriously. Pretty nice actually. It similar to the vue in my opinion.
+- **LitElement** for web components: First time using it seriously, pretty nice actually. It's similar to the vuejs in my opinion.
 - **Vanilla JavaScript** (Why no typescript ? :D)
 - **Redux** for state management: Forgot how verbose vanilla Redux is. Kept it simple, toolkit created a lot of problems so i decided not to use redux/toolkit.
 - **Vaadin Router** for routing: Seems like a pretty straight forward router.
 - **Web Test Runner/Playwright** for testing: ^bored face^
 - **Local Storage** for persistence storage: Well since we dont have a backend
+- **Local Message** for langauge change: i18n like libraries didnt want to work, so i asked myself how hard it can be? Turns out it is pretty easy to do...
 
 ## How to Run This Thing
 
