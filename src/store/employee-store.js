@@ -1,10 +1,11 @@
 import { createStore } from "redux";
 
+// old style redux state since i had some issues with "process not found error"
+
 const saveToLocalStorage = (employees) => {
   localStorage.setItem("employees", JSON.stringify(employees));
 };
 
-// old style redux state since i had some issues with "process not found error"
 const loadFromLocalStorage = () => {
   const employees = localStorage.getItem("employees");
   const parsedEmployees = JSON.parse(employees);
@@ -30,7 +31,6 @@ const initialState = {
   },
 };
 
-// action names
 export const ADD_EMPLOYEE = "ADD_EMPLOYEE";
 export const DELETE_EMPLOYEE = "DELETE_EMPLOYEE";
 export const EDIT_EMPLOYEE = "EDIT_EMPLOYEE";
