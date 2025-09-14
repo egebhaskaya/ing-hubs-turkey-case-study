@@ -174,6 +174,7 @@ export class EmployeeAddEdit extends LitElement {
         <div class="form-container">
           <div class="form-grid">
             <input-element
+              class="input-element"
               name="firstName"
               label="First Name"
               .value=${this.firstName}
@@ -181,6 +182,7 @@ export class EmployeeAddEdit extends LitElement {
               @input-change=${this.handleInputChange}
             ></input-element>
             <input-element
+              class="input-element"
               name="lastName"
               label="Last Name"
               .value=${this.lastName}
@@ -188,27 +190,31 @@ export class EmployeeAddEdit extends LitElement {
               @input-change=${this.handleInputChange}
             ></input-element>
             <date-picker-element
+              class="input-element"
               name="dateOfEmployment"
               label="Date of Employment"
               .value=${this.dateOfEmployment}
               .error=${this.errors.dateOfEmployment || ""}
               @input-change=${this.handleInputChange}
             ></date-picker-element>
-            <input-element
-              name="email"
-              label="Email"
-              .value=${this.email}
-              .error=${this.errors.email || ""}
-              @input-change=${this.handleInputChange}
-            ></input-element>
             <date-picker-element
+              class="input-element"
               name="dateOfBirth"
               label="Date of Birth"
               .value=${this.dateOfBirth}
               .error=${this.errors.dateOfBirth || ""}
               @input-change=${this.handleInputChange}
             ></date-picker-element>
+            <input-element
+              class="input-element"
+              name="email"
+              label="Email"
+              .value=${this.email}
+              .error=${this.errors.email || ""}
+              @input-change=${this.handleInputChange}
+            ></input-element>
             <phone-input-element
+              class="input-element"
               name="phone"
               label="Phone"
               .value=${this.phone}
@@ -216,6 +222,7 @@ export class EmployeeAddEdit extends LitElement {
               @input-change=${this.handleInputChange}
             ></phone-input-element>
             <dropdown-element
+              class="input-element"
               name="department"
               label="Department"
               .value=${this.department}
@@ -224,6 +231,7 @@ export class EmployeeAddEdit extends LitElement {
               @input-change=${this.handleInputChange}
             ></dropdown-element>
             <dropdown-element
+              class="input-element"
               name="position"
               label="Position"
               .value=${this.position}
@@ -234,15 +242,19 @@ export class EmployeeAddEdit extends LitElement {
           </div>
           <div class="button-container">
             <button-element
+              class="button"
               label="Save"
               bgColor="#ff6202"
               textColor="white"
+              block
               @click=${this.handleSave}
             ></button-element>
             <button-element
+              class="button"
               label="Cancel"
               variant="outlined"
               bgColor="#8B20FF"
+              block
               @click=${this.handleCancel}
             ></button-element>
           </div>
@@ -294,12 +306,25 @@ export class EmployeeAddEdit extends LitElement {
     }
 
     .button-container {
-      display: flex;
-      flex-direction: row;
-      justify-content: center;
-      align-items: center;
-      gap: 10px;
-      padding-top: 20px;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      row-gap: 100px;
+      column-gap: 100px;
+      padding-top: 40px;
+      width: 100%;
+    }
+
+    .button-container :first-child {
+      width: 100%;
+      justify-self: flex-end;
+    }
+
+    .button-container :last-child {
+      width: 100%;
+      justify-self: flex-start;
+    }
+    .button {
+      max-width: 300px;
     }
 
     .form-grid {
@@ -307,8 +332,16 @@ export class EmployeeAddEdit extends LitElement {
       grid-template-columns: repeat(3, 1fr);
       gap: 20px;
       width: 100%;
+      justify-items: center;
+      align-items: center;
+    }
+
+    .input-element {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
       justify-content: center;
-      align-items: start;
+      width: 100%;
     }
 
     @media (max-width: 1024px) {
@@ -320,6 +353,25 @@ export class EmployeeAddEdit extends LitElement {
     @media (max-width: 768px) {
       .form-grid {
         grid-template-columns: 1fr !important;
+      }
+
+      .button-container {
+        grid-template-columns: 1fr !important;
+        row-gap: 20px;
+      }
+
+      .button-container :first-child {
+        width: 100%;
+        justify-self: center;
+      }
+
+      .button-container :last-child {
+        width: 100%;
+        justify-self: center;
+      }
+
+      .button {
+        max-width: 300px;
       }
     }
   `;

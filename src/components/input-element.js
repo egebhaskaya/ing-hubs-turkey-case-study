@@ -6,6 +6,7 @@ export class InputElement extends LitElement {
     value: { type: String },
     name: { type: String },
     error: { type: String },
+    placeholder: { type: String },
   };
 
   constructor() {
@@ -14,6 +15,7 @@ export class InputElement extends LitElement {
     this.value = "";
     this.name = "";
     this.error = "";
+    this.placeholder = "";
   }
 
   handleInputChange(event) {
@@ -38,6 +40,7 @@ export class InputElement extends LitElement {
         <input
           type="text"
           .value=${this.value}
+          placeholder=${this.placeholder}
           @input=${this.handleInputChange}
         />
         ${this.error ? html`<span class="error">${this.error}</span>` : ""}
@@ -50,6 +53,7 @@ export class InputElement extends LitElement {
       display: flex;
       flex-direction: column;
       gap: 5px;
+      width: 100%;
       max-width: 300px;
     }
 
@@ -66,6 +70,7 @@ export class InputElement extends LitElement {
       font-size: 14px;
       font-weight: 400;
       outline: none;
+      height: 24px;
     }
 
     input:focus {

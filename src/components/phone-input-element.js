@@ -104,6 +104,7 @@ export class PhoneInputElement extends LitElement {
       flex-direction: column;
       gap: 5px;
       max-width: 300px;
+      width: 100%;
     }
 
     label {
@@ -116,9 +117,10 @@ export class PhoneInputElement extends LitElement {
       border: 1px solid gray;
       border-radius: 5px;
       padding: 4px;
-      font-size: 12px;
+      font-size: 14px;
       font-weight: 400;
       outline: none;
+      height: 24px;
     }
 
     input:focus {

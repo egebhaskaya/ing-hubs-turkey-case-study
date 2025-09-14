@@ -1,13 +1,119 @@
 import { LitElement, html, css } from "lit";
+import { store, setPagination } from "../store/employee-store.js";
 
 export class PaginationElement extends LitElement {
+  static properties = {
+    pagination: { type: Object },
+  };
+
+  constructor() {
+    super();
+    this.pagination = {
+      page: 1,
+      pageSize: 10,
+      totalPages: 1,
+      totalItems: 0,
+      showPagination: false,
+    };
+  }
+
   render() {
+    if (!this?.pagination?.showPagination) return html``;
+
+    const pageButtons = [];
+    const maxVisible = 5;
+    const currentPage = this.pagination.page;
+    const totalPages = this.pagination.totalPages;
+
+    if (totalPages <= maxVisible) {
+      for (let i = 1; i <= totalPages; i++) {
+        pageButtons.push(html`
+          <div
+            class="pagination-buttons ${i === currentPage
+              ? "pagination-buttons-active"
+              : ""}"
+            @click=${() => store.dispatch(setPagination(i))}
+          >
+            ${i}
+          </div>
+        `);
+      }
+    } else {
+      let startPage, endPage;
+
+      if (currentPage <= 3) {
+        startPage = 1;
+        endPage = maxVisible;
+      } else if (currentPage >= totalPages - 2) {
+        startPage = totalPages - maxVisible + 1;
+        endPage = totalPages;
+      } else {
+        startPage = currentPage - 2;
+        endPage = currentPage + 2;
+      }
+
+      if (startPage > 1) {
+        pageButtons.push(html`
+          <div
+            class="pagination-buttons"
+            @click=${() => store.dispatch(setPagination(1))}
+          >
+            1
+          </div>
+        `);
+        if (startPage > 2) {
+          pageButtons.push(html`<div class="pagination-buttons">...</div>`);
+        }
+      }
+
+      for (let i = startPage; i <= endPage; i++) {
+        pageButtons.push(html`
+          <div
+            class="pagination-buttons ${i === currentPage
+              ? "pagination-buttons-active"
+              : ""}"
+            @click=${() => store.dispatch(setPagination(i))}
+          >
+            ${i}
+          </div>
+        `);
+      }
+
+      if (endPage < totalPages) {
+        if (endPage < totalPages - 1) {
+          pageButtons.push(html`<div class="pagination-buttons">...</div>`);
+        }
+        pageButtons.push(html`
+          <div
+            class="pagination-buttons ${totalPages === currentPage
+              ? "pagination-buttons-active"
+              : ""}"
+            @click=${() => store.dispatch(setPagination(totalPages))}
+          >
+            ${totalPages}
+          </div>
+        `);
+      }
+    }
+
     return html`
       <div class="pagination-container">
-        <button-element icon="leftArrow" bgColor="#f7f7f7"></button-element>
-        <div class="pagination-buttons pagination-buttons-active">1</div>
-        <div class="pagination-buttons">2</div>
-        <button-element icon="rightArrow" bgColor="#f7f7f7"></button-element>
+        <button-element
+          icon="leftArrow"
+          bgColor="#f7f7f7"
+          @click=${() =>
+            store.dispatch(setPagination(this.pagination.page - 1))}
+        >
+        </button-element>
+
+        ${pageButtons}
+
+        <button-element
+          icon="rightArrow"
+          bgColor="#f7f7f7"
+          @click=${() =>
+            store.dispatch(setPagination(this.pagination.page + 1))}
+        ></button-element>
       </div>
     `;
   }

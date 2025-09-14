@@ -65,6 +65,7 @@ export class DropdownElement extends LitElement {
       flex-direction: column;
       gap: 5px;
       max-width: 300px;
+      width: 100%;
     }
 
     label {
@@ -76,8 +77,8 @@ export class DropdownElement extends LitElement {
     select {
       border: 1px solid gray;
       border-radius: 5px;
-      padding: 5px;
-      font-size: 12px;
+      padding: 7px;
+      font-size: 14px;
       font-weight: 400;
       outline: none;
       background-color: white;

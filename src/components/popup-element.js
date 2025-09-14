@@ -1,7 +1,11 @@
 import { LitElement, html, css } from "lit";
 
+import "../components/button-element.js";
+
 export class PopupElement extends LitElement {
   static properties = {
+    title: { type: String },
+    description: { type: String },
     show: { type: Boolean },
     onConfirm: { type: Function },
     onCancel: { type: Function },
@@ -20,34 +24,43 @@ export class PopupElement extends LitElement {
     this.dispatchEvent(new CustomEvent("cancel"));
   }
 
-  handleBackdropClick(event) {
-    // Close popup when clicking on the backdrop (not the content)
-    if (event.target.classList.contains("popup")) {
-      this.dispatchEvent(new CustomEvent("cancel"));
-    }
+  handleClose() {
+    this.dispatchEvent(new CustomEvent("close"));
   }
 
   render() {
     if (!this.show) return html``;
 
-    return html`<div class="popup" @click=${this.handleBackdropClick}>
+    return html`<div class="popup">
       <div class="popup-content">
-        <h2>Delete Employee</h2>
-        <p>Are you sure you want to delete this employee?</p>
+        <div class="popup-header">
+          <span class="title">${this.title}</span>
+          <button-element
+            icon="close"
+            iconSize="30px"
+            size="small"
+            @click=${this.handleClose}
+          ></button-element>
+        </div>
+        <p class="description">${this.description}</p>
         <div class="button-container">
           <button-element
             bgColor="#ff6202"
             label="Delete"
             textColor="white"
+            block
             @click=${this.handleConfirm}
           >
             Delete
           </button-element>
           <button-element
-            bgColor="#f7f7f7"
+            bgColor="#8B20FF"
             label="Cancel"
             textColor="gray"
-            @click=${this.handleCancel}
+            block
+            variant="outlined"
+            size="medium"
+            @click=${this.handleClose}
           >
             Cancel
           </button-element>
@@ -67,6 +80,28 @@ export class PopupElement extends LitElement {
       display: flex;
       align-items: center;
       justify-content: center;
+      box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+    }
+
+    .popup-header {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      color: #ff6202;
+      width: 100%;
+    }
+
+    .title {
+      font-size: 24px;
+      font-weight: 400;
+      color: #ff6202;
+    }
+
+    .description {
+      font-size: 16px;
+      font-weight: 400;
+      color: black;
     }
 
     .popup-content {
@@ -77,19 +112,15 @@ export class PopupElement extends LitElement {
       gap: 10px;
       background-color: white;
       padding: 20px;
+      padding-top: 10px;
       border-radius: 10px;
     }
 
     .button-container {
       display: flex;
       flex-direction: column;
-      align-items: center;
-      justify-content: center;
       gap: 10px;
-    }
-
-    .hidden {
-      display: none;
+      width: 100%;
     }
   `;
 }

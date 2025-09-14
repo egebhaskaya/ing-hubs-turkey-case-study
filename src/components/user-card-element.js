@@ -3,13 +3,30 @@ import { deleteEmployee, store } from "../store/employee-store.js";
 
 import "./button-element.js";
 
-export class CardElement extends LitElement {
+export class UserCardElement extends LitElement {
   static properties = {
+    id: { type: String },
     employee: { type: Object },
   };
 
   handleEdit() {
-    window.location.href = `/dev/employee.html?id=${this.employee.id}`;
+    this.dispatchEvent(
+      new CustomEvent("edit", {
+        detail: {
+          id: this.employee.id,
+        },
+      })
+    );
+  }
+
+  handleDelete() {
+    this.dispatchEvent(
+      new CustomEvent("delete", {
+        detail: {
+          id: this.employee.id,
+        },
+      })
+    );
   }
 
   render() {
@@ -62,15 +79,17 @@ export class CardElement extends LitElement {
           bgColor="#8B20FF"
           textColor="white"
           iconSize="20px"
-          @click=${this.handleEdit}
-        ></button-element>
+          @click=${() => this.handleEdit(this.employee.id)}
+        >
+        </button-element>
         <button-element
           icon="delete"
           label="Delete"
           bgColor="#ff6202"
           textColor="white"
-          @click=${() => store.dispatch(deleteEmployee(this.employee.id))}
-        ></button-element>
+          @click=${() => this.handleDelete(this.employee.id)}
+        >
+        </button-element>
       </div>
     </div> `;
   }
@@ -81,7 +100,6 @@ export class CardElement extends LitElement {
       padding: 20px;
       background: white;
       box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
-      min-width: 500px;
     }
 
     .card-inner {
@@ -90,6 +108,7 @@ export class CardElement extends LitElement {
       justify-content: space-between;
       align-items: center;
       padding-bottom: 20px;
+      width: 100%;
     }
 
     .button-container {
@@ -98,6 +117,7 @@ export class CardElement extends LitElement {
       justify-content: flex-start;
       align-items: center;
       gap: 10px;
+      width: 100%;
     }
 
     .info {
@@ -106,6 +126,7 @@ export class CardElement extends LitElement {
       justify-content: space-between;
       align-items: flex-start;
       gap: 10px;
+      width: 100%;
     }
 
     .info-container {
@@ -113,20 +134,24 @@ export class CardElement extends LitElement {
       flex-direction: column;
       justify-content: space-between;
       align-items: flex-start;
+      width: 100%;
     }
 
     .info-title {
+      display: flex;
       font-weight: 300;
       font-size: 16px;
       color: gray;
     }
 
     .info-content {
+      display: flex;
       font-weight: 400;
       font-size: 18px;
       color: black;
+      width: 100%;
     }
   `;
 }
 
-customElements.define("card-element", CardElement);
+customElements.define("user-card-element", UserCardElement);
