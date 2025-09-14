@@ -15,11 +15,16 @@ const loadFromLocalStorage = () => {
   }
 };
 
+const loadViewModeFromLocalStorage = () => {
+  const viewMode = localStorage.getItem("viewMode");
+  return viewMode || "table";
+};
+
 const initialState = {
   employees: {
     list: loadFromLocalStorage(),
     filteredList: loadFromLocalStorage(),
-    viewMode: "table",
+    viewMode: loadViewModeFromLocalStorage(),
     searchTerm: "",
     pagination: {
       viewList: [],
@@ -172,6 +177,7 @@ const rootReducer = (state = initialState, action) => {
     }
 
     case SET_VIEW_MODE:
+      localStorage.setItem("viewMode", action.payload);
       return {
         ...state,
         employees: {

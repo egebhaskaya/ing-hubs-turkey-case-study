@@ -1,5 +1,6 @@
 import { LitElement, html, css } from "lit";
 import { t } from "../utils/translate.js";
+import { formatPhoneNumber } from "../utils/formatPhoneNumber.js";
 
 import "./button-element.js";
 
@@ -36,39 +37,41 @@ export class UserCardElement extends LitElement {
       <div class="card-inner">
         <div class="info">
           <div class="info-container">
-            <span class="info-title"> First Name: </span>
+            <span class="info-title"> ${t("firstName")}: </span>
             <span class="info-content"> ${this.employee.firstName} </span>
           </div>
           <div class="info-container">
-            <span class="info-title"> Date of Employment: </span>
+            <span class="info-title"> ${t("dateOfEmployment")}: </span>
             <span class="info-content">
               ${this.employee.dateOfEmployment}
             </span>
           </div>
           <div class="info-container">
-            <span class="info-title"> Phone: </span>
-            <span class="info-content"> ${this.employee.phone} </span>
+            <span class="info-title"> ${t("phone")}: </span>
+            <span class="info-content">
+              ${formatPhoneNumber(this.employee.phone)}
+            </span>
           </div>
           <div class="info-container">
-            <span class="info-title"> Department: </span>
+            <span class="info-title"> ${t("department")}: </span>
             <span class="info-content"> ${this.employee.department} </span>
           </div>
         </div>
         <div class="info">
           <div class="info-container">
-            <span class="info-title"> Last Name: </span>
+            <span class="info-title"> ${t("lastName")}: </span>
             <span class="info-content"> ${this.employee.lastName} </span>
           </div>
           <div class="info-container">
-            <span class="info-title"> Date of Birth: </span>
+            <span class="info-title"> ${t("dateOfBirth")}: </span>
             <span class="info-content"> ${this.employee.dateOfBirth} </span>
           </div>
           <div class="info-container">
-            <span class="info-title"> Email: </span>
+            <span class="info-title"> ${t("email")}: </span>
             <span class="info-content"> ${this.employee.email} </span>
           </div>
           <div class="info-container">
-            <span class="info-title"> Position: </span>
+            <span class="info-title"> ${t("position")}: </span>
             <span class="info-content"> ${this.employee.position} </span>
           </div>
         </div>
