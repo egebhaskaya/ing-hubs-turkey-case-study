@@ -1,4 +1,5 @@
 import { LitElement, html, css } from "lit";
+import { t } from "../utils/translate.js";
 
 import "../components/button-element.js";
 
@@ -46,7 +47,7 @@ export class PopupElement extends LitElement {
         <div class="button-container">
           <button-element
             bgColor="#ff6202"
-            label="Delete"
+            label="${t("delete")}"
             textColor="white"
             block
             @click=${this.handleConfirm}
@@ -55,7 +56,7 @@ export class PopupElement extends LitElement {
           </button-element>
           <button-element
             bgColor="#8B20FF"
-            label="Cancel"
+            label="${t("cancel")}"
             textColor="gray"
             block
             variant="outlined"

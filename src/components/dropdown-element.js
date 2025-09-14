@@ -1,4 +1,5 @@
 import { LitElement, html, css } from "lit";
+import { t } from "../utils/translate.js";
 
 export class DropdownElement extends LitElement {
   static properties = {
@@ -16,7 +17,7 @@ export class DropdownElement extends LitElement {
     this.name = "";
     this.value = "";
     this.options = [];
-    this.placeholder = "Please Select";
+    this.placeholder = t("pleaseSelect");
     this.error = "";
   }
 

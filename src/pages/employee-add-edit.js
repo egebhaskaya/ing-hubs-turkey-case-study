@@ -1,5 +1,7 @@
 import { LitElement, html, css } from "lit";
 import { store, addEmployee, editEmployee } from "../store/employee-store.js";
+import { Router } from "@vaadin/router";
+import { t } from "../utils/translate.js";
 
 import "../layout/header-element.js";
 import "../components/input-element.js";
@@ -43,8 +45,7 @@ export class EmployeeAddEdit extends LitElement {
   }
 
   checkForEditMode() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const id = urlParams.get("id");
+    const id = this.location?.params?.id;
 
     if (id) {
       this.isEdit = true;
@@ -85,32 +86,32 @@ export class EmployeeAddEdit extends LitElement {
   validateForm() {
     const errors = {};
 
-    if (!this.firstName.trim()) errors.firstName = "First name is required";
-    if (!this.lastName.trim()) errors.lastName = "Last name is required";
-    if (!this.email.trim()) errors.email = "Email is required";
-    if (!this.phone.trim()) errors.phone = "Phone number is required";
+    if (!this.firstName.trim()) errors.firstName = t("firstNameRequired");
+    if (!this.lastName.trim()) errors.lastName = t("lastNameRequired");
+    if (!this.email.trim()) errors.email = t("emailRequired");
+    if (!this.phone.trim()) errors.phone = t("phoneRequired");
     if (!this.dateOfEmployment)
-      errors.dateOfEmployment = "Employment date is required";
-    if (!this.dateOfBirth) errors.dateOfBirth = "Date of birth is required";
-    if (!this.department) errors.department = "Department is required";
-    if (!this.position.trim()) errors.position = "Position is required";
+      errors.dateOfEmployment = t("dateOfEmploymentRequired");
+    if (!this.dateOfBirth) errors.dateOfBirth = t("dateOfBirthRequired");
+    if (!this.department) errors.department = t("departmentRequired");
+    if (!this.position.trim()) errors.position = t("positionRequired");
 
     if (this.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.email)) {
-      errors.email = "Please enter a valid email address";
+      errors.email = t("invalidEmail");
     }
 
     if (
       this.phone &&
       (this.phone.length !== 12 || !this.phone.startsWith("90"))
     ) {
-      errors.phone = "Please enter a valid Turkish phone number";
+      errors.phone = t("invalidTurkishPhone");
     }
 
     if (this.firstName && /\d/.test(this.firstName)) {
-      errors.firstName = "First name cannot contain numbers";
+      errors.firstName = t("firstNameCannotContainNumbers");
     }
     if (this.lastName && /\d/.test(this.lastName)) {
-      errors.lastName = "Last name cannot contain numbers";
+      errors.lastName = t("lastNameCannotContainNumbers");
     }
 
     return errors;
@@ -144,11 +145,11 @@ export class EmployeeAddEdit extends LitElement {
       store.dispatch(addEmployee(formData));
     }
 
-    window.location.href = "/dev/index.html";
+    Router.go("/");
   }
 
   handleCancel() {
-    window.location.href = "/dev/index.html";
+    Router.go("/");
   }
 
   render() {
@@ -168,7 +169,7 @@ export class EmployeeAddEdit extends LitElement {
       <div class="container">
         <div class="title-container">
           <span class="title"
-            >${this.isEdit ? "Edit Employee" : "Add Employee"}</span
+            >${this.isEdit ? t("editEmployee") : t("addEmployee")}</span
           >
         </div>
         <div class="form-container">
@@ -176,7 +177,7 @@ export class EmployeeAddEdit extends LitElement {
             <input-element
               class="input-element"
               name="firstName"
-              label="First Name"
+              label="${t("firstName")}"
               .value=${this.firstName}
               .error=${this.errors.firstName || ""}
               @input-change=${this.handleInputChange}
@@ -184,7 +185,7 @@ export class EmployeeAddEdit extends LitElement {
             <input-element
               class="input-element"
               name="lastName"
-              label="Last Name"
+              label="${t("lastName")}"
               .value=${this.lastName}
               .error=${this.errors.lastName || ""}
               @input-change=${this.handleInputChange}
@@ -192,7 +193,7 @@ export class EmployeeAddEdit extends LitElement {
             <date-picker-element
               class="input-element"
               name="dateOfEmployment"
-              label="Date of Employment"
+              label="${t("dateOfEmployment")}"
               .value=${this.dateOfEmployment}
               .error=${this.errors.dateOfEmployment || ""}
               @input-change=${this.handleInputChange}
@@ -200,7 +201,7 @@ export class EmployeeAddEdit extends LitElement {
             <date-picker-element
               class="input-element"
               name="dateOfBirth"
-              label="Date of Birth"
+              label="${t("dateOfBirth")}"
               .value=${this.dateOfBirth}
               .error=${this.errors.dateOfBirth || ""}
               @input-change=${this.handleInputChange}
@@ -208,7 +209,7 @@ export class EmployeeAddEdit extends LitElement {
             <input-element
               class="input-element"
               name="email"
-              label="Email"
+              label="${t("email")}"
               .value=${this.email}
               .error=${this.errors.email || ""}
               @input-change=${this.handleInputChange}
@@ -216,7 +217,7 @@ export class EmployeeAddEdit extends LitElement {
             <phone-input-element
               class="input-element"
               name="phone"
-              label="Phone"
+              label="${t("phone")}"
               .value=${this.phone}
               .error=${this.errors.phone || ""}
               @input-change=${this.handleInputChange}
@@ -224,7 +225,7 @@ export class EmployeeAddEdit extends LitElement {
             <dropdown-element
               class="input-element"
               name="department"
-              label="Department"
+              label="${t("department")}"
               .value=${this.department}
               .options=${departments}
               .error=${this.errors.department || ""}
@@ -233,7 +234,7 @@ export class EmployeeAddEdit extends LitElement {
             <dropdown-element
               class="input-element"
               name="position"
-              label="Position"
+              label="${t("position")}"
               .value=${this.position}
               .options=${positions}
               .error=${this.errors.position || ""}
@@ -243,7 +244,7 @@ export class EmployeeAddEdit extends LitElement {
           <div class="button-container">
             <button-element
               class="button"
-              label="Save"
+              label="${t("save")}"
               bgColor="#ff6202"
               textColor="white"
               block
@@ -251,7 +252,7 @@ export class EmployeeAddEdit extends LitElement {
             ></button-element>
             <button-element
               class="button"
-              label="Cancel"
+              label="${t("cancel")}"
               variant="outlined"
               bgColor="#8B20FF"
               block

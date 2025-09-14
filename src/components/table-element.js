@@ -1,5 +1,5 @@
 import { LitElement, html, css } from "lit";
-import { store, deleteEmployee } from "../store/employee-store.js";
+import { formatPhoneNumber } from "../utils/formatPhoneNumber.js";
 
 import "./checkbox-element.js";
 import "./button-element.js";
@@ -27,11 +27,13 @@ export class TableElement extends LitElement {
     );
   }
 
-  handleDelete(id) {
+  handleDelete(id, firstName, lastName) {
     this.dispatchEvent(
       new CustomEvent("delete", {
         detail: {
           id,
+          firstName,
+          lastName,
         },
       })
     );
@@ -71,10 +73,19 @@ export class TableElement extends LitElement {
                             </button-element>
                             <button-element
                               icon="delete"
-                              @click=${() => this.handleDelete(employee.id)}
+                              @click=${() =>
+                                this.handleDelete(
+                                  employee.id,
+                                  employee.firstName,
+                                  employee.lastName
+                                )}
                             >
                             </button-element>
                           </div>
+                        </td>`
+                      : column.key === "phone"
+                      ? html`<td id="${column.key}-column">
+                          ${formatPhoneNumber(employee[column.key])}
                         </td>`
                       : html`<td id="${column.key}-column">
                           ${employee[column.key]}

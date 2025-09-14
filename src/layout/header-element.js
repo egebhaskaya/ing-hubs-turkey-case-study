@@ -1,19 +1,27 @@
 import { LitElement, html, css } from "lit";
+import { Router } from "@vaadin/router";
+import { t, getCurrentLanguage, setLanguage } from "../utils/translate.js";
 
 import "../components/button-element.js";
 
 export class HeaderElement extends LitElement {
   handleAddNewRoute() {
-    window.location.href = "/dev/employee.html";
+    Router.go("/add");
   }
 
   handleEmployeesRoute() {
-    window.location.href = "/dev/index.html";
+    Router.go("/");
+  }
+
+  handleLanguageToggle() {
+    const currentLang = getCurrentLanguage();
+    const newLang = currentLang === "en" ? "tr" : "en";
+    setLanguage(newLang);
   }
 
   render() {
     return html` <header>
-      <div>
+      <div class="logo" @click="${this.handleEmployeesRoute}">
         <img src="../public/images/ing-logo.png" alt="ING" />
         <span>ING</span>
       </div>
@@ -36,7 +44,7 @@ export class HeaderElement extends LitElement {
         <button-element
           class="header-button-desktop"
           fontWeight="400"
-          label="Employees"
+          label="${t("employees")}"
           icon="person"
           @click="${this.handleEmployeesRoute}"
         ></button-element>
@@ -44,12 +52,16 @@ export class HeaderElement extends LitElement {
         <button-element
           class="header-button-desktop"
           fontWeight="400"
-          label="Add New"
+          label="${t("addNew")}"
           icon="plus"
           @click="${this.handleAddNewRoute}"
         ></button-element>
 
-        <span>TR</span>
+        <button-element
+          @click="${this.handleLanguageToggle}"
+          .label="${getCurrentLanguage() === "en" ? "🇹🇷" : "🇬🇧"}"
+        >
+        </button-element>
       </div>
     </header>`;
   }
@@ -78,6 +90,10 @@ export class HeaderElement extends LitElement {
       border-radius: 5px;
     }
 
+    .logo {
+      cursor: pointer;
+    }
+
     .container div {
       display: flex;
       align-items: center;
@@ -91,6 +107,19 @@ export class HeaderElement extends LitElement {
 
     .header-button-desktop {
       display: block;
+    }
+
+    .lang-button {
+      cursor: pointer;
+      padding: 8px 12px;
+      border-radius: 4px;
+      background-color: #f0f0f0;
+      font-weight: 500;
+    }
+
+    .lang-button:hover {
+      background-color: #ff6202;
+      color: white;
     }
 
     @media (max-width: 768px) {

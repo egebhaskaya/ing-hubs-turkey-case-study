@@ -1,4 +1,5 @@
 import { LitElement, html, css } from "lit";
+import { t } from "../utils/translate.js";
 
 import "../components/button-element.js";
 import "../components/input-element.js";
@@ -11,7 +12,7 @@ export class SearchInputElement extends LitElement {
 
   constructor() {
     super();
-    this.placeholder = "Search employees...";
+    this.placeholder = "";
     this.value = "";
   }
 
@@ -57,7 +58,7 @@ export class SearchInputElement extends LitElement {
 
         <div class="button-container">
           <button-element
-            label="Search"
+            label="${t("search")}"
             bgColor="#ff6202"
             textColor="white"
             @click="${this.handleSearch}"
@@ -67,7 +68,7 @@ export class SearchInputElement extends LitElement {
           <button-element
             @click="${this.handleClear}"
             type="button"
-            label="Clear"
+            label="${t("clear")}"
           >
           </button-element>
         </div>

@@ -1,0 +1,53 @@
+export const en = {
+  employees: "Employees",
+  addNew: "Add New",
+  employeeList: "Employee List",
+
+  noEmployeesFound: "No employees found please add a new employee",
+  firstName: "First Name",
+  lastName: "Last Name",
+  email: "Email",
+  phone: "Phone",
+  department: "Department",
+  position: "Position",
+  dateOfBirth: "Date of Birth",
+  dateOfEmployment: "Date of Employment",
+
+  save: "Save",
+  edit: "Edit",
+  cancel: "Cancel",
+  search: "Search",
+  clear: "Clear",
+  delete: "Delete",
+
+  confirmDelete: "Are you sure?",
+  deleteMessage: "Selected Employee record of {name} will be deleted",
+  searchPlaceholder: "Search employees...",
+  search: "Search",
+  clear: "Clear",
+
+  required: "This field is required",
+  invalidEmail: "Please enter a valid email address",
+  invalidPhone: "Please enter a valid phone number",
+  firstNameRequired: "First name is required",
+  lastNameRequired: "Last name is required",
+  emailRequired: "Email is required",
+  phoneRequired: "Phone number is required",
+  dateOfEmploymentRequired: "Employment date is required",
+  dateOfBirthRequired: "Date of birth is required",
+  departmentRequired: "Department is required",
+  positionRequired: "Position is required",
+  invalidEmail: "Please enter a valid email address",
+  invalidTurkishPhone: "Please enter a valid Turkish phone number",
+  firstNameCannotContainNumbers: "First name cannot contain numbers",
+  lastNameCannotContainNumbers: "Last name cannot contain numbers",
+
+  editEmployee: "Edit Employee",
+  addEmployee: "Add Employee",
+
+  analytics: "Analytics",
+  tech: "Tech",
+
+  actions: "Actions",
+  pleaseSelect: "Please Select",
+};

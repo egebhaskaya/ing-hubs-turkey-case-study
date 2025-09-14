@@ -1,5 +1,5 @@
 import { LitElement, html, css } from "lit";
-import { deleteEmployee, store } from "../store/employee-store.js";
+import { t } from "../utils/translate.js";
 
 import "./button-element.js";
 
@@ -19,11 +19,13 @@ export class UserCardElement extends LitElement {
     );
   }
 
-  handleDelete() {
+  handleDelete(id, firstName, lastName) {
     this.dispatchEvent(
       new CustomEvent("delete", {
         detail: {
-          id: this.employee.id,
+          id,
+          firstName,
+          lastName,
         },
       })
     );
@@ -75,7 +77,7 @@ export class UserCardElement extends LitElement {
       <div class="button-container">
         <button-element
           icon="edit"
-          label="Edit"
+          label="${t("edit")}"
           bgColor="#8B20FF"
           textColor="white"
           iconSize="20px"
@@ -84,10 +86,15 @@ export class UserCardElement extends LitElement {
         </button-element>
         <button-element
           icon="delete"
-          label="Delete"
+          label="${t("delete")}"
           bgColor="#ff6202"
           textColor="white"
-          @click=${() => this.handleDelete(this.employee.id)}
+          @click=${() =>
+            this.handleDelete(
+              this.employee.id,
+              this.employee.firstName,
+              this.employee.lastName
+            )}
         >
         </button-element>
       </div>

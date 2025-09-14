@@ -1,136 +1,102 @@
-# LitElement JavaScript starter
+# Employee Management System
 
-This project includes a sample component using LitElement with JavaScript.
+Hello there! I am Ege Bercan HASKAYA. This is my case study project for ING Hubs Turkey. It's an employee management system built with web components and LitElement. First of all, i never used LitElement so this was a bit of learning and going from previous experiences. However, in the end after a lot of errors and creating a stable project, i actually liked LitElement. Also, using vanilla javascript really stretches your brain muscles. :D
 
-This template is generated from the `lit-starter-js` package in [the main Lit
-repo](https://github.com/lit/lit). Issues and PRs for this template should be
-filed in that repo.
+## What I Built
 
-## About this release
+Basically, it's a CRUD app for managing employees. You can add, edit, delete employees and search through them. Nothing too fancy, but it works well and covers almost all of the given requirements.
 
-This is a pre-release of Lit 3.0, the next major version of Lit.
+## Tech Stack
 
-Lit 3.0 has very few breaking changes from Lit 2.0:
+- **LitElement** for web components: First time using it seriously. Pretty nice actually. It similar to the vue in my opinion.
+- **Vanilla JavaScript** (Why no typescript ? :D)
+- **Redux** for state management: Forgot how verbose vanilla Redux is. Kept it simple, toolkit created a lot of problems so i decided not to use redux/toolkit.
+- **Vaadin Router** for routing: Seems like a pretty straight forward router.
+- **Web Test Runner/Playwright** for testing: ^bored face^
+- **Local Storage** for persistence storage: Well since we dont have a backend
 
-- Drops support for IE11
-- Published as ES2021
-- Removes a couple of deprecated Lit 1.x APIs
-
-Lit 3.0 should require no changes to upgrade from Lit 2.0 for the vast majority of users. Once the full release is published, most apps and libraries will be able to extend their npm version ranges to include both 2.x and 3.x, like `"^2.7.0 || ^3.0.0"`.
-
-Lit 2.x and 3.0 are _interoperable_: templates, base classes, directives, decorators, etc., from one version of Lit will work with those from another.
-
-Please file any issues you find on our [issue tracker](https://github.com/lit/lit/issues).
-
-## Setup
-
-Install dependencies:
+## How to Run This Thing
 
 ```bash
-npm i
+# Install all packages with npm
+npm install
+
+# Run the dev server
+npm run serve
+
+# Please navigate to http://localhost:8000
+```
+
+Thats it. Should work out of the box.
+
+## Project Structure
+
+Well at the half point i just asked myself was this really necessary? But whatever here is a unnecessary root map...
+
+```
+├── index.html                  # Main HTML entry point (SPA root)
+├── src/                        # Source code
+│   ├── components/             # All the reusable UI components
+│   │   ├── button-element.js         # Reusable button with variants
+│   │   ├── input-element.js          # Text input with validation
+│   │   ├── dropdown-element.js       # Select dropdown component
+│   │   ├── phone-input-element.js    # Turkish phone number input
+│   │   ├── search-input-element.js   # Search with clear/search buttons
+│   │   ├── table-element.js          # Employee data table
+│   │   ├── pagination-element.js     # Pagination with sliding window
+│   │   ├── popup-element.js          # Confirmation dialogs
+│   │   ├── checkbox-element.js       # Custom checkbox
+│   │   ├── icon-element.js           # SVG icon component
+│   │   ├── user-card-element.js      # Employee card for grid view
+│   │   └── date-picker-element.js    # Date picker component
+│   ├── layout/
+│   │   └── header-element.js         # App header with navigation
+│   ├── pages/                  # Main application pages
+│   │   ├── employee-list.js          # Main employee listing page
+│   │   └── employee-add-edit.js      # Add/edit employee form
+│   ├── store/                  # State management
+│   │   └── employee-store.js         # Redux store with all actions
+│   ├── utils/                  # Helper functions
+│   │   ├── translate.js              # Localization utilities
+│   │   └── formatPhoneNumber.js      # Phone formatting logic
+│   ├── locales/                # Internationalization files
+│   │   ├── en.js                     # English translations
+│   │   └── tr.js                     # Turkish translations
+│   └── router/                 # Client-side routing
+│       └── router.js                 # Vaadin router setup
+└── test/                       # Test files
 ```
 
 ## Testing
 
-This sample modern-web.dev's
-[@web/test-runner](https://www.npmjs.com/package/@web/test-runner) for testing. See the
-[modern-web.dev testing documentation](https://modern-web.dev/docs/test-runner/overview) for
-more information.
+I tried to cover everything that comes to my mind.
 
-Tests can be run with the `test` script, which will run your tests against Lit's development mode (with more verbose errors) as well as against Lit's production mode:
+I covered:
+
+- All components
+- Store functionality
+- Localization
+- Form validation
+- Edge cases
+
+Go ahead and run the test command:
 
 ```bash
 npm test
 ```
 
-For local testing during development, the `test:dev:watch` command will run your tests in Lit's development mode (with verbose errors) on every change to your source files:
+## Things I'd Improve
 
-```bash
-npm test:watch
-```
+If I had more time:
 
-Alternatively the `test:prod` and `test:prod:watch` commands will run your tests in Lit's production mode.
+- Better error handling for edge cases, maybe create a validation function and more robust handling. Maybe even a validation library can be used but i just wanted to keep things simple since we only have one form.
+- More animations, transitions and nicer ui always appreciated. Maybe even add dark/light mode.
+- Maybe more simpler redux store, thing got a little bit out of hand at the end. :D
+- Optimization for pages and components. Since this is my first time using LitElement i am not %100 sure is unnecesary rendering happening or not...
+- Better components for sure, for the sake of this case study i didn't go too far deep into "creating the perfect component" vibe, but if i had time i would definitely go for more robust/reusable components.
 
-## Dev Server
+## Final Thoughts
 
-This sample uses modern-web.dev's [@web/dev-server](https://www.npmjs.com/package/@web/dev-server) for previewing the project without additional build steps. Web Dev Server handles resolving Node-style "bare" import specifiers, which aren't supported in browsers. It also automatically transpiles JavaScript and adds polyfills to support older browsers. See [modern-web.dev's Web Dev Server documentation](https://modern-web.dev/docs/dev-server/overview/) for more information.
+This was a fun project! Web components are pretty cool once you get the hang of them. LitElement makes it much easier than vanilla web components.
 
-To run the dev server and open the project in a new browser tab:
-
-```bash
-npm run serve
-```
-
-There is a development HTML file located at `/dev/index.html` that you can view at http://localhost:8000/dev/index.html. Note that this command will serve your code using Lit's development mode (with more verbose errors). To serve your code against Lit's production mode, use `npm run serve:prod`.
-
-## Editing
-
-If you use VS Code, we highly recommend the [lit-plugin extension](https://marketplace.visualstudio.com/items?itemName=runem.lit-plugin), which enables some extremely useful features for lit-html templates:
-
-- Syntax highlighting
-- Type-checking
-- Code completion
-- Hover-over docs
-- Jump to definition
-- Linting
-- Quick Fixes
-
-The project is setup to recommend lit-plugin to VS Code users if they don't already have it installed.
-
-## Linting
-
-Linting of JavaScript files is provided by [ESLint](eslint.org). In addition, [lit-analyzer](https://www.npmjs.com/package/lit-analyzer) is used to type-check and lint lit-html templates with the same engine and rules as lit-plugin.
-
-The rules are mostly the recommended rules from each project, but some have been turned off to make LitElement usage easier. The recommended rules are pretty strict, so you may want to relax them by editing `.eslintrc.json`.
-
-To lint the project run:
-
-```bash
-npm run lint
-```
-
-## Formatting
-
-[Prettier](https://prettier.io/) is used for code formatting. It has been pre-configured according to the Lit's style. You can change this in `.prettierrc.json`.
-
-Prettier has not been configured to run when committing files, but this can be added with Husky and `pretty-quick`. See the [prettier.io](https://prettier.io/) site for instructions.
-
-## Static Site
-
-This project includes a simple website generated with the [eleventy](https://11ty.dev) static site generator and the templates and pages in `/docs-src`. The site is generated to `/docs` and intended to be checked in so that GitHub pages can serve the site [from `/docs` on the main branch](https://help.github.com/en/github/working-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site).
-
-To enable the site go to the GitHub settings and change the GitHub Pages &quot;Source&quot; setting to &quot;main branch /docs folder&quot;.</p>
-
-To build the site, run:
-
-```bash
-npm run docs
-```
-
-To serve the site locally, run:
-
-```bash
-npm run docs:serve
-```
-
-To watch the site files, and re-build automatically, run:
-
-```bash
-npm run docs:gen:watch
-```
-
-The site will usually be served at http://localhost:8000.
-
-**Note**: The project uses Rollup to bundle and minify the source code for the docs site and not to publish to NPM. For bundling and minification, check the [Bundling and minification](#bundling-and-minification) section.
-
-## Bundling and minification
-
-As stated in the [static site generation](#static-site) section, the bundling and minification setup in the Rollup configuration in this project is there specifically for the docs generation.
-
-We recommend publishing components as unoptimized JavaScript modules and performing build-time optimizations at the application level. This gives build tools the best chance to deduplicate code, remove dead code, and so on.
-
-Please check the [Publishing best practices](https://lit.dev/docs/tools/publishing/#publishing-best-practices) for information on publishing reusable Web Components, and [Build for production](https://lit.dev/docs/tools/production/) for building application projects that include LitElement components, on the Lit site.
-
-## More information
-
-See [Get started](https://lit.dev/docs/getting-started/) on the Lit site for more information.
+The app is fully functional. It's not going to win any design awards, but it's clean, works well, and the code is maintainable.

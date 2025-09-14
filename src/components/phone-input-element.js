@@ -1,4 +1,5 @@
 import { LitElement, html, css } from "lit";
+import { formatPhoneNumber } from "../utils/formatPhoneNumber.js";
 
 export class PhoneInputElement extends LitElement {
   static properties = {
@@ -16,31 +17,6 @@ export class PhoneInputElement extends LitElement {
     this.value = "";
     this.placeholder = "+90 (5xx) xxx xx xx";
     this.error = "";
-  }
-
-  formatPhoneNumber(value) {
-    let digits = value.replace(/\D/g, "");
-    if (!digits) return "";
-    if (!digits.startsWith("90")) digits = "90" + digits;
-
-    const len = digits.length;
-    if (len <= 2) return `+90`;
-    if (len <= 5) return `+90 (${digits.slice(2)}`;
-    if (len <= 8) return `+90 (${digits.slice(2, 5)}) ${digits.slice(5)}`;
-    if (len <= 10)
-      return `+90 (${digits.slice(2, 5)}) ${digits.slice(5, 8)} ${digits.slice(
-        8
-      )}`;
-    if (len <= 12)
-      return `+90 (${digits.slice(2, 5)}) ${digits.slice(5, 8)} ${digits.slice(
-        8,
-        10
-      )} ${digits.slice(10)}`;
-
-    return `+90 (${digits.slice(2, 5)}) ${digits.slice(5, 8)} ${digits.slice(
-      8,
-      10
-    )} ${digits.slice(10, 12)}`;
   }
 
   handleKeyDown(event) {
@@ -63,7 +39,7 @@ export class PhoneInputElement extends LitElement {
       return;
     }
 
-    const formattedValue = this.formatPhoneNumber(value);
+    const formattedValue = formatPhoneNumber(value);
     this.value = formattedValue;
 
     const deformattedValue = value.replace(/\D/g, "");
@@ -80,7 +56,7 @@ export class PhoneInputElement extends LitElement {
   }
 
   render() {
-    const displayValue = this.formatPhoneNumber(this.value);
+    const displayValue = formatPhoneNumber(this.value);
 
     return html`
       <div class="phone-container">

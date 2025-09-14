@@ -1,4 +1,7 @@
 import { LitElement, html, css } from "lit";
+import { Router } from "@vaadin/router";
+import { t } from "../utils/translate.js";
+
 import {
   store,
   addEmployee,
@@ -141,7 +144,7 @@ const testHandler = () => {
   array.map((item) => {
     store.dispatch(
       addEmployee({
-        id: "emp_" + Date.now() + Math.random(),
+        id: "emp_" + Date.now() + "_" + Math.floor(Math.random() * 1000000),
         firstName: item,
         lastName: "Working",
         email: "test@working.com",
@@ -173,6 +176,7 @@ export class EmployeeList extends LitElement {
     this.employees = [];
     this.viewMode = "table";
     this.employeeIdToBeDeleted = null;
+    this.employeeNameToBeDeleted = null;
     this.showPopup = false;
     this.searchTerm = "";
     this.pagination = {
@@ -221,11 +225,15 @@ export class EmployeeList extends LitElement {
   }
 
   handleEdit(detail) {
-    window.location.href = `/dev/employee.html?id=${detail?.detail?.id}`;
+    Router.go(`/edit/${detail?.detail?.id}`, { id: detail?.detail?.id });
   }
 
   handleShowPopup(detail) {
+    console.log(detail.detail);
     this.employeeIdToBeDeleted = detail?.detail?.id;
+    this.employeeNameToBeDeleted =
+      detail?.detail?.firstName + " " + detail?.detail?.lastName;
+
     this.showPopup = true;
   }
 
@@ -253,23 +261,22 @@ export class EmployeeList extends LitElement {
 
   render() {
     const tableColumns = [
-      { label: "First Name", key: "firstName" },
-      { label: "Last Name", key: "lastName" },
-      { label: "Email", key: "email" },
-      { label: "Date of Employment", key: "dateOfEmployment" },
-      { label: "Date of Birth", key: "dateOfBirth" },
-      { label: "Phone", key: "phone" },
-      { label: "Email", key: "email" },
-      { label: "Department", key: "department" },
-      { label: "Position", key: "position" },
-      { label: "Actions", key: "actions" },
+      { label: t("firstName"), key: "firstName" },
+      { label: t("lastName"), key: "lastName" },
+      { label: t("dateOfEmployment"), key: "dateOfEmployment" },
+      { label: t("dateOfBirth"), key: "dateOfBirth" },
+      { label: t("phone"), key: "phone" },
+      { label: t("email"), key: "email" },
+      { label: t("department"), key: "department" },
+      { label: t("position"), key: "position" },
+      { label: t("actions"), key: "actions" },
     ];
 
     return html`
       <header-element></header-element>
       <div class="container">
         <div class="title-container">
-          <span class="title">Employee List</span>
+          <span class="title">${t("employeeList")}</span>
           <div>
             <button-element
               icon="list"
@@ -291,7 +298,7 @@ export class EmployeeList extends LitElement {
               <div class="search-container">
                 <search-input-element
                   .value="${this.searchTerm}"
-                  label="Search employees..."
+                  placeholder="${t("searchPlaceholder")}"
                   @search="${this.handleSearchChange}"
                 >
                 </search-input-element>
@@ -325,11 +332,7 @@ export class EmployeeList extends LitElement {
               </div>
             `}
         ${!this.employees || this.employees?.length === 0
-          ? html`
-              <div class="no-employees">
-                No employees found please add a new employee
-              </div>
-            `
+          ? html` <div class="no-employees">${t("noEmployeesFound")}</div> `
           : html`
               <pagination-element .pagination=${this.pagination}>
               </pagination-element>
@@ -337,8 +340,10 @@ export class EmployeeList extends LitElement {
       </div>
 
       <popup-element
-        title="Are you sure?"
-        description="Selected Employee record of Ahmet Sourtimes will be deleted"
+        title="${t("confirmDelete")}"
+        .description=${t("deleteMessage", {
+          name: this.employeeNameToBeDeleted,
+        })}
         .show=${this.showPopup}
         @close=${this.handleClosePopup}
         @confirm=${this.handleDelete}
