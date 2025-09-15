@@ -54,7 +54,8 @@ export class SearchInputElement extends LitElement {
           .value="${this.value}"
           @input="${this.handleInput}"
           @keydown="${this.handleKeyDown}"
-        ></input-element>
+        >
+        </input-element>
 
         <div class="button-container">
           <button-element
@@ -91,6 +92,7 @@ export class SearchInputElement extends LitElement {
       justify-content: center;
       align-items: center;
       gap: 10px;
+      margin-top: 4px;
     }
 
     @media (max-width: 768px) {

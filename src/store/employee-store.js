@@ -1,7 +1,5 @@
 import { createStore } from "redux";
 
-// old style redux state since i had some issues with "process not found error"
-
 const saveToLocalStorage = (employees) => {
   localStorage.setItem("employees", JSON.stringify(employees));
 };

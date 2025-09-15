@@ -86,7 +86,6 @@ export class EmployeeList extends LitElement {
   }
 
   handleShowPopup(detail) {
-    console.log(detail.detail);
     this.employeeIdToBeDeleted = detail?.detail?.id;
     this.employeeNameToBeDeleted =
       detail?.detail?.firstName + " " + detail?.detail?.lastName;

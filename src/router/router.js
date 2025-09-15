@@ -26,6 +26,4 @@ document.addEventListener("DOMContentLoaded", () => {
       redirect: "/",
     },
   ]);
-
-  console.log("Vaadin Router initialized successfully!");
 });
