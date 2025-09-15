@@ -95,6 +95,7 @@ If I had more time:
 - Maybe more simpler redux store, thing got a little bit out of hand at the end. :D
 - Optimization for pages and components. Since this is my first time using LitElement i am not %100 sure is unnecesary rendering happening or not...
 - Better components for sure, for the sake of this case study i didn't go too far deep into "creating the perfect component" vibe, but if i had time i would definitely go for more robust/reusable components.
+- Also add some functionality for table checkboxes like bulk delete or edit.
 
 ## Final Thoughts
 
