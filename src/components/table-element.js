@@ -14,6 +14,8 @@ export class TableElement extends LitElement {
 
   constructor() {
     super();
+    this.list = [];
+    this.columns = [];
   }
 
   handleEdit(id) {
